@@ -1,4 +1,5 @@
 //DAY 11 PROBLEM 1
+//WITHOUT USING SET
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
@@ -9,7 +10,7 @@ public:
         //contain this number
         //BUT, WE HAVE TO CHECK FOR DUBLICATES B/W J & K SEPEREATELY INSIDE THE WHILE LOOP:
         vector<vector<int>>res;
-        unordered_set<int>check_rep;
+       
         if(nums.size()<3)
             return res;
         sort(nums.begin(),nums.end());
@@ -18,7 +19,7 @@ public:
             if(i!=0&&nums[i]==nums[i-1])
                 continue;
             int j=i+1,k=nums.size()-1;
-            check_rep.clear();
+           
             while(j<k)
             {
             //CHECKING FOR DUBLICATES B/W J& K
@@ -47,7 +48,7 @@ public:
                  {
                      k--;
                  }
-                check_rep.insert(nums[j]);
+               
             }
            
         }
