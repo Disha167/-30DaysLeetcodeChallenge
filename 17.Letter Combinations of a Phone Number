@@ -1,0 +1,32 @@
+//The idea is to iterate over all the possible letters for a particular digit using for loop and increase the index of the valid combination we are generating using recursion.
+
+class Solution {
+    vector<string>ans;
+   void pattern(vector<string> &mapping,string digits,int index_of_digit, string valid)
+   {
+       if(index_of_digit==digits.length())
+       {
+           ans.push_back(valid);
+           return;
+       }
+        //for getting the value of digit in numeric form
+       int d=digits[index_of_digit]-'0';
+      //for getting the set of all letters represented by a given number by mapping vector of strings
+       string letter=mapping[d];
+     //Using for loop, the index of letters i.e. all possible letters that can be attached to our valid string is increased  
+ for(int index_of_letters=0;index_of_letters<letter.length();index_of_letters++)
+ {
+     pattern(mapping,digits,index_of_digit+1,valid+ letter[index_of_letters] );
+ }
+   }
+    public:
+    vector<string> letterCombinations(string digits) {
+           ans.clear();
+        if(digits.empty())
+            return ans;
+     
+       vector<string>mapping={"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        pattern(mapping,digits,0,"");
+       return ans;
+    }
+};
