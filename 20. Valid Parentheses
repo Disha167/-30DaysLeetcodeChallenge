@@ -1,0 +1,70 @@
+//DAY 13 PROBLEM 3
+//The approach is simple to handle different string characters seperately , all the opening braces when encountered are just pushed in the stack, but when we encounter
+//the closing brackets, we check whether the top of the stack i.e. the last character of the string is same set of opening brace.
+//Few edge cases are there to remember
+class Solution {
+public:
+    bool isValid(string s) {
+        if(s.length()==1)
+            return false;
+        bool flag=false;
+        stack<char>st;
+        
+       for(int i=0;i<s.length();i++)
+       {
+           
+           if(s[i]=='(')
+           {
+               st.push('(');
+           }
+         else  if(s[i]=='{')
+         {
+             st.push('{');
+         }
+           else if(s[i]=='[')
+           {
+               st.push('[');
+           }
+           else if(s[i]==')')
+           {
+           //🤦🏾 The top of the stack can't be accesed if the stack is empty, it will throw an error so we first check whether the stack is empty or not.Eg:'}]'
+               if(!st.empty()&&st.top()=='(')
+                   st.pop();
+               else
+               {
+                   flag=true;
+                   break;
+               }
+                   
+           }
+               else if(s[i]=='}')
+           {
+               if(!st.empty()&&st.top()=='{')
+                   st.pop();
+               else 
+               {
+                   flag=true;
+                   break;
+               }
+                   
+           }
+               else if(s[i]==']')
+           {
+               if(!st.empty()&&st.top()=='[')
+                   st.pop();
+               else
+               {
+                   flag=true;
+                   break;
+               }
+                   
+           }
+        }
+        //😰Here along with checking for flag true, also check whether the stack is empty or not as we remove elements only when we encounter the closing brackets...
+        //If the stack contains only the opening braces, then it can never be the valid parenthesis like '((' or '{['
+        if(flag==true||!st.empty())
+            return false;
+        else
+            return true;
+    }
+};
