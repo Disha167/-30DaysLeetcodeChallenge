@@ -1,0 +1,47 @@
+//🎯DAY 13 PROBLEM 2
+//The approach is very simple i.e. we use two pointers, move the first pointer till n and then move 2 pointers simultaneously.. When the second pointer moves till end, the first pointer
+//will reach nth position from the end. We just need to handle some edge cases:
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        if(head->next==NULL)
+            head=NULL;
+       else
+       {
+      ListNode *p1=head,*p2=head,*prevp1=head;
+        int count=0;
+        while(count<n-1)
+        {
+            p2=p2->next
+            count++;
+        }
+        //📌Take care of this when we have to remove the head of the linked list itself then the process would be different and if we follow the same process,
+        //then we null->next is bound to occur and error occurs
+           if(p2->next==NULL)
+           {
+               head=head->next;
+               return head;
+           }
+      while(p2->next!=NULL)
+      {
+          prevp1=p1;
+          p1=p1->next;
+          p2=p2->next;
+      }
+        prevp1->next=p1->next;
+     
+      }
+           return head;
+    }
+};
