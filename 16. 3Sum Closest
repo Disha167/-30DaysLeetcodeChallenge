@@ -1,0 +1,70 @@
+//DAY 13 PROBLEM 1
+//Same approach as 3Sum ... that we fix one element and then move the two pointers in the rest of the array to check on every triplet
+//Just the difference is that, here we keep a track of min_diff and keep on updating it whenever we get a smaller absolute value of difference than we previously had stored
+
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+      
+        sort(nums.begin(),nums.end());
+        int min_sum=0,min_diff=INT_MAX;
+    
+        for(int index=0;index<nums.size()-2;index++)
+        {
+           int end=nums.size()-1,start=index+1;
+            while(start<end)
+            {
+                 
+                 if(nums[index]+nums[start]+nums[end]==target)
+                 {
+                    if(abs((nums[index]+nums[start]+nums[end])-target)<min_diff)
+                    {
+                     min_sum=(nums[index]+nums[start]+nums[end]);
+                         min_diff=abs((nums[index]+nums[start]+nums[end])-target);
+                        // cout<<min_sum<<endl;
+                        // cout<<nums[index]<<" "<<nums[start]<<" "<<nums[end]<<endl;
+                        }
+                     break;
+                 }
+               else if(nums[index]+nums[start]+nums[end]<target)
+                {
+                   
+                     if(abs((nums[index]+nums[start]+nums[end])-target)<min_diff)
+                    {
+                     min_sum=(nums[index]+nums[start]+nums[end]);
+                         min_diff=abs((nums[index]+nums[start]+nums[end])-target);
+                           // cout<<min_sum<<endl;
+                        // cout<<nums[index]<<" "<<nums[start]<<" "<<nums[end]<<endl;
+                        }
+                   start++;
+                }
+                else  if(nums[index]+nums[start]+nums[end]>target)
+                {
+                   
+                   
+                  if(abs((nums[index]+nums[start]+nums[end])-target)<min_diff)
+                    {
+                     min_sum=(nums[index]+nums[start]+nums[end]);
+                         min_diff=abs((nums[index]+nums[start]+nums[end])-target);
+                        // cout<<min_sum<<endl;
+                        // cout<<nums[index]<<" "<<nums[start]<<" "<<nums[end]<<endl;
+                        }
+                    end--;
+                }
+                
+              
+            }
+            //This is important to check, as in ideal position the difference between the triplets sum and the target is 0 i.e. they are same .
+            //In this condition, we break out of the while loop, but we also have to leave the for loop as we have found the answer... so we check if min_diff==0
+            //after the while loop ends.
+            //Remember, we can't use abs((nums[index]+nums[start]+nums[end])-target)==0 condition as the end and the start can change in one of the else if conditions
+            //And, we may get false combinations
+         if(min_diff==0)
+                  {
+                      min_sum=target;
+                      break;
+                  }
+        }
+        return min_sum;
+    }
+};
