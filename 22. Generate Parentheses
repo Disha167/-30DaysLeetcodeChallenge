@@ -1,0 +1,33 @@
+//DAY 14 PROBLEM 1
+//The approach is simple , use recursion where there are two choices either to use an open bracket or a closed bracket...
+//The open bracket can be used everytime but the closed bracket can only be used when they are greater in number than the opening bracket i.e. once we use ) at the first position
+//of the combination, then the combination can't be valid in any case so we can use 1 closing bracket only if we put a first opening bracket i.e. the closing bracket can only be used
+//if they are greater in number than the number of opening brackets.
+class Solution {
+public:
+    vector<string>ans;
+    void parenthesis_generator(int close, int open, string combination)
+    {
+        if(open==0&& close==0)
+        {
+            ans.push_back(combination);
+            return;
+        }
+        if(open>0)
+        {
+            parenthesis_generator(close, open-1, combination+"(");
+        }
+        if(close>open)
+        {
+            parenthesis_generator(close-1, open, combination+")");  
+        }
+      
+    }
+    vector<string> generateParenthesis(int n) {
+       int close=n;
+        int open=n;
+        ans.clear();
+        parenthesis_generator(close,open,"");
+        return ans;
+    }
+};
