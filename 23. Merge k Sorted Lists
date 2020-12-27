@@ -1,0 +1,60 @@
+//DAY 15 PROBLEM 1
+//This question can be solved using various approaches: 
+//1)We can add all the lists into one list and then sort them
+//2)We can use divide and conquer while merging the lists
+//Here, we use priority queue of pairs, first element of the pair to store the current node and second element to store the position of the list
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+ //We make a custom comparatpr function for comparing the first element of priority queue of pairs
+struct mycmp{
+    bool operator()(pair<ListNode*,int>&p1,pair<ListNode*,int>&p2){
+        return p1.first->val>p2.first->val;
+    }
+};
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<pair<ListNode*,int>,vector<pair<ListNode*,int>>,mycmp>pq;
+         ListNode *head=NULL, *temp=NULL;
+        if(lists.empty()) return head;
+        //We first push all the head pointers of the k lists given 
+        for(int i=0;i<lists.size();i++)
+        {
+            if(lists[i]!=NULL)
+            pq.push(make_pair(lists[i],i));
+        }
+        //Then, while the priority queue becomes empty, we keep on popping the smallest element and keep on attaching to the list.
+        while(!pq.empty())
+        {
+            if(head==NULL)
+            {
+                head=temp=pq.top().first;
+            }
+            else
+            {
+                temp->next=pq.top().first;
+                temp=temp->next;
+            
+            }
+            
+            int arraypos=pq.top().second;
+            pq.pop();
+            //We check first whether the next element of that kth list is null or not, if it is not then we push the next element of the same list in the priority queue.
+            if(lists[arraypos]->next!=NULL)
+            {
+                lists[arraypos]=lists[arraypos]->next;
+                pq.push(make_pair(lists[arraypos],arraypos));
+            }
+        }
+        return head;
+    }
+};
