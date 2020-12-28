@@ -1,0 +1,29 @@
+//🎯DAY 16 PROBLEM 1
+//It is a easy problem that can be solved by using two pointers, one pointer for keeping the track of index of new array and another for keeping the track of the dublicate elements
+//i.e. incrementing it always when dublicate elements occur. But, the edge cases are frustrating af.😢
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+     int i=0,j=0;
+        int n=nums.size();
+        for(int j=0;j<n;j++)
+        {
+        //😯 😯 nums[i]=nums[j] i.e. the non-dublicate elements are to be replaced inplace everytime either the next element is dublicate or not. If the element is dublicate, then
+        //j is incremented and as soon as the dublicate streak ends, it comes out of while and inplace elements are replaced and normally also elements are replaced.
+             nums[i]=nums[j];
+              if(i+1<=n)  
+                i++;
+                // 🥵🥵Check j+1<n before accessing nums[j+1] to avoid out of bounds condition.
+            if(j+1<n&&nums[j]==nums[j+1])
+            {
+                  // 🥵🥵Check j+1<n before accessing nums[j+1] to avoid out of bounds condition.
+                while(j+1<n&&nums[j]==nums[j+1])
+                j++;
+            }
+            
+               
+            
+        }
+        return i;
+    }
+};
