@@ -1,0 +1,50 @@
+//🎯DAY 17 PROBLEM 1
+//The idea is simple to binary search for the element in the array and then maintain two pointers, one start and one end and keep on incrementing and decrementing untill we get
+//the same element.
+class Solution {
+    int binarySearch(int l, int r, vector<int>&nums, int target)
+    {
+        int mid=l+ (r-l)/2;
+        if(l<=r)
+        {
+            if(nums[mid]==target)
+                return mid;
+            if(nums[mid]>target)
+                return binarySearch(0, mid-1, nums, target);
+            if(nums[mid]<target)
+                return binarySearch(mid+1, r, nums, target);
+        }
+        return -1;
+    }
+        public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int pos=binarySearch(0,nums.size()-1,nums,target);
+        int start=pos,end=pos;
+     if(nums.empty())return {-1,-1};
+     
+       if(pos ==-1)
+           return {-1,-1};
+        else
+        {
+         //😨😨Don't forget to check nums[pos+1] not nums[pos] ==target as when we check for pos+1, then we make end=pos+1 in the while loop.
+            while(pos<nums.size()-1&&nums[pos+1]==target)
+            {
+                end++;
+                pos++;
+            }
+            pos=start;
+            //📌REMEMBER📌
+             //😨😨Similarly,Don't forget to check nums[pos-1] not nums[pos] ==target as when we check for pos-1, then we make start=pos-1 in the while loop.If we check for pos,
+             //and then make start-- i.e. initially start was pos, now it becomes pos-1, it may be possible that nums[pos-1]!=target and we return that as we have earlier checked 
+             //for nums[pos]. 
+             while(pos>0&&nums[pos-1]==target)
+            {
+                start--;
+                 pos--;
+            }
+            
+        }
+     
+            return {start,end};
+    }
+};
