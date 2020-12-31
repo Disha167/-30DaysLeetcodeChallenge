@@ -1,0 +1,38 @@
+//🎯DAY 19 PROBLEM 1
+//The idea is to calculate the water that can be filled over every index one by one, and the water that can be filled is calculated by the greater walls surrounding it, the 
+//minimum among the two greater walls decide the amount of water that can be filled.
+//The two arrays maxleft and maxright is maintained and minimum among the two is calculated at every index and then the total water that can be filled is the sum of water 
+//that can be filled by every index.
+//EG for array 0 1 0 2 1 0 1 3 2 1 2 1
+//Maxleft for the above array:  0 1 1 2 2 2 2 3 3 3 3 3 
+//Maxright for the above array: 3 3 3 3 3 3 3 3 2 2 2 1
+//The water that can be filled over the 2nd index, 0 is of area 1 as maxleft for 2nd index is 1 and maxright is 2 , so area is min(maxleft,maxright)-height[0];
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if(height.size()==0)return 0;
+      int maxl[height.size()+1];
+        int maxr[height.size()+1];
+        maxl[0]=height[0];
+        for(int i=1;i<height.size();i++)
+        {
+            maxl[i]=max(height[i],maxl[i-1]);
+        }
+        maxr[height.size()-1]=height[height.size()-1];
+         for(int i=height.size()-2;i>=0;i--)
+        {
+            maxr[i]=max(height[i],maxr[i+1]);
+        }
+        int area=0;
+        for(int i=1;i<height.size()-1;i++)
+        {
+            if((maxl[i-1]>height[i])&&(maxr[i+1]>height[i]))
+               {
+                   area+=min(maxl[i-1],maxr[i+1])-height[i];
+               }
+        }
+        return area;
+        
+    }
+               };
+       
