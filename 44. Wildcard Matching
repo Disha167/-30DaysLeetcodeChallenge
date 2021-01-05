@@ -1,0 +1,50 @@
+//🎯DAY 20 PROBLEM 1
+//Variation of lcs
+//used the bottom up approach
+//using the i-1,j-1 value if the pattern and string matches 
+//if it contains *, then two cases will form, not considering the * in pattern i.e. * represents empty sequence , for that M[i][j-1]
+//Second case, when * is the last character in the pattern and it already matches with the string i.e. M[i-1][j] so we can add more characters
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        bool M[s.length()+2][p.length()+2];
+        memset(M,false,sizeof(M));
+        for(int i=0;i<s.length()+1;i++)
+        {
+            for(int j=0;j<p.length()+1;j++)
+            {
+                if(i==0&&j==0)
+                //When pattern and string both are empty, then they match
+                  M[0][0]=true;
+                //i.e if pattern is empty, then whatever be the value of string,
+                //they can never match.
+                else if(j==0&&i!=0)
+                    M[i][j]=false;
+               else  if(i==0&&j!=0)
+                {
+                    //When the pattern is *, then we see that if the previous 
+                    //character of pattern and string was a match, then it will
+                    //also be a match(given that * can represent empty character)
+                    if(p[j-1]=='*')
+                        M[i][j]=M[i][j-1];
+                    else
+                        M[i][j]=false;
+                }
+                
+              //if the current string and pattern are equal, then we fill true if it was previously matching otherwise false i.e. it depends on M[i-1][j-1]
+                else if((s[i-1]==p[j-1])||(p[j-1]=='?'))
+                {
+                    M[i][j]=M[i-1][j-1];
+                }
+               else if(p[j-1]=='*')
+                {
+                    M[i][j]=M[i-1][j]||M[i][j-1];
+                }
+                
+                
+            }
+        
+        }
+          return M[s.length()][p.length()]; 
+    }
+};
