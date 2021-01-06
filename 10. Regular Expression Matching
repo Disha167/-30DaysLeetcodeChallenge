@@ -1,0 +1,56 @@
+//🎯DAY 21 PROBLEM 1
+//It is also a variation of lcs problem and a higher version of wildcard matching but very tough to decide the transition of the dp table😢😢
+//This a bottom up solution explaining all the transition points
+//In the table , the row represents the pattern and the coloumn represents the string
+class Solution {
+public:
+
+    bool isMatch(string s, string p) {
+    
+         bool M[p.length()+2][s.length()+2];
+        memset(M,false,sizeof(M));
+        for(int i=0;i<p.length()+1;i++)
+        {
+            for(int j=0;j<s.length()+1;j++)
+            {
+            //the empty pattern and string always matches
+                if(i==0&&j==0)
+                  M[0][0]=true;
+               //If the string is empty, then the pattern can't match if it is not a '*', but if it is a asterik then we check the matching for char 2 rows above in the pattern
+               //because the "s*" together can also match with an empty string so we have to go two rows before . If they match then it will also match, eg. as* matches
+               //with a for the same reason.
+                else if(j==0&&i!=0)
+                {
+                    if(p[i-1]=='*')
+                        M[i][j]=M[i-2][j];
+                    else
+                    M[i][j]=false;
+                     
+                }
+               //i.e if pattern is empty, then whatever be the value of string,
+                //they can never match.
+               else  if(i==0&&j!=0)
+                {
+                        M[i][j]=false;
+                }
+                
+              //If the pattern and the string's current character matches , we look out for their previous conditions. Eg. in asd and a*d, d and d will match but when we go 
+              //for M[i-1][j-1] i.e. considering as and a*, it will not match so overall M[i][j] will become false.
+                else if((p[i-1]==s[j-1])||(p[i-1]=='.'))
+                {
+                    M[i][j]=M[i-1][j-1];
+                }
+                //If the pattern has * then similarly we check for the 2nd last row but here 1 more condition is added, if the preceding character to '*' and the current 
+                //character of string matches or it is '.'(as '.' matches with any character).Eg. mis* and mis s and s are same so we check for mi and mi, they match and
+                //we can add any number of s afterwards so it will give true.
+               else if(p[i-1]=='*')
+                {
+                    M[i][j]=M[i-2][j];
+                   if((p[i-2]==s[j-1])||(p[i-2]=='.'))
+                        M[i][j]=M[i][j]||M[i][j-1];
+                } 
+            }
+        }
+          return M[p.length()][s.length()]; 
+    }
+};
