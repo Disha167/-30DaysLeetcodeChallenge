@@ -1,0 +1,36 @@
+//🎯DAY 22 PROBLEM 1
+//It is based on the mathematical intuition of permutation i.e. if we have 3 positions and we have to permute for A,B,C then can place all three letters A,B,C on first position,
+then after placing one letter on first position, we have a choice to choose between two letters for the second position, then ultimately we have to place the third letter on the 
+//3rd position, we have no choices to choose from.
+//The coding implementation of the above concept using recursion and backtracking is tough.
+
+class Solution {
+//HELPER FUNCTION
+    void  genPermute(vector<int>&nums,int i, vector<vector<int>>&ans)
+    //i is used to maintain the index of the letter which we are going to fix.
+    //At, every level of decision tree, one additional letter is going to be fixed
+    {
+        if(i==nums.size()-1)
+        {
+            ans.push_back(nums);
+            return;
+        }
+        //The following loop is required to iterate among the remaining letters that are not fixed
+        for(int j=i;j<nums.size();j++)
+        {
+            swap(nums[i],nums[j]);
+              genPermute(nums,i+1,ans);//At every level, we fix the next character
+            swap(nums[i],nums[j]);
+        }
+    }
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+         int i=0;
+        vector<vector<int>>ans;
+        if(nums.size()==0)
+            return ans;
+        
+        genPermute(nums,i,ans);
+        return ans;
+    }
+};
