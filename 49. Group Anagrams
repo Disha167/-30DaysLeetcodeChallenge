@@ -1,0 +1,30 @@
+//🎯DAY 23 PROBLEM 2
+//This is an interesting problem where the naive solution seems so intuitive but optimising it requires a lot of creativity.
+//By, creativity I meant that we use hash map where key is a string and value is a vector of strings.....
+//YEAH, YOU HEARD IT RIGHT.... VECTOR OF STRINGS IS THE VALUE IN MAP
+//So, we have to group anagrams together and there is an interesting property of anagrams, that when sorted they become equal, so we sort every string and treat sorted string as 
+//our key and keep adding all the anagrams to the same vector i.e. vector of strings
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>>ans;
+        if(strs.empty())return ans;
+       
+       unordered_map<string,vector<string>>mp;
+        for(int i=0;i<strs.size();i++)
+        {
+            string org_string=strs[i];
+            sort(org_string.begin(),org_string.end());
+            string key=org_string;
+            
+                mp[key].push_back(strs[i]);
+            
+        }
+        
+        for(auto i=mp.begin();i!=mp.end();i++)
+        {
+            ans.push_back(i->second);
+        }
+        return ans;
+    }
+};
