@@ -1,0 +1,35 @@
+//🎯DAY 24 PROBLEM 1
+//The idea is similar to that of ceiling problem, everything is similar to binary search just we store the mid in some variable if it is greater than our target, before we move
+//to the left.
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        int target_num=(target-48)-'0';
+        int start=0;
+        int end=letters.size()-1;
+        char ans=letters[0];
+        //🌞🌞ASK THE BELOW CORNER CASE BELOW FROM INTERVIEWER 👇🏽👇🏽
+        //✔️✔️Take care of corner cases before moving to the algorithm. Here, the corner cases is when there are no letters in the array that are greater than target if we 
+        //consider A-Z (just linearly tied, not wrapped) . Eg: if we have letters as{"a","b"} and target as "z", then the answer considering normal case would be none
+        //but we consider the letters tied up i.e.🧐 🧐  the next greater element of "z" is "a"(acc. to ques)
+        if(target_num>(letters[letters.size()-1]-48)-'0')
+            return letters[0]; //So, if we have exhausted linearly & did'nt find the nextGreatestLetter among the 26 letters, then we return the 0th letter of the array
+        while(start<=end)
+        {
+            int mid=start + (end-start)/2;
+            /*if((letters[mid]-48)-'0'==target_num) //📌 📌 equality not considered in question(SMALLEST GREATER THAN TARGET ASKED)
+                return letters [mid];*/
+             if((letters[mid]-48)-'0'<=target_num)
+             {
+              start=mid+1 ;  
+             }
+            else if((letters[mid]-48)-'0'>target_num)
+             {
+                 ans=letters[mid];
+                 end=mid-1;
+                 
+             }
+        }
+        return ans;
+    }
+};
