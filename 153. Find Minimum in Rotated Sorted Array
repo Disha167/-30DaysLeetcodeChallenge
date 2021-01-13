@@ -1,0 +1,30 @@
+//🎯DAY 24 PROBLEM 1
+//✔️✔️Key Takeaways from the problem:Even, after building the solution, always run the array problem on size 1 input, in most of the cases the normal solution gives runtime error
+//class Solution {
+    int binarySearch(vector<int>&nums, int start, int end)
+    {
+        int mid=start + (end-start)/2;
+        if(start<=end)
+        {
+        //❌❌Do not write nums[mid-1]
+        //✔️✔️Instead use nums[(N+mid-1)%N] where N=nums.size(), this is done to prevent overflow as in the case of 2,1 the mid comes out to be 0 and then mid-1 is not a defined 
+        //index, rather the previous of element 2 is 1 in a rotated array so we return (2+0-1)%2 as the index i.e 1 element
+        if(nums[(nums.size()+mid-1)%nums.size()]>nums[mid])
+            return nums[mid];
+        if(nums[mid]<nums[end])
+            return binarySearch(nums,start,mid-1);
+        if(nums[mid]>=nums[end])
+            return binarySearch(nums,mid+1,end);
+        }
+        return nums[mid];
+    }
+public:
+    int findMin(vector<int>& nums) {
+        //⚠️⚠️if size is 1, then mid-1 gives overflow, so return here only 
+        if(nums.size()==1)
+            return nums[0];
+        if(nums[0]<nums[nums.size()-1])
+            return nums[0];
+       return binarySearch(nums,0,nums.size()-1); 
+    }
+};
