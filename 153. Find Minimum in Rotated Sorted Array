@@ -1,4 +1,8 @@
 //🎯DAY 24 PROBLEM 1
+//The idea of the problem is binary search. In binary search, two things are needed when to return the answer and then the condition that decides where to go first half or
+// second half. In normal binary search,if nums[mid]<target then we go to second larger half i.e. start=mid+1.
+//Here, eg 22 23 24 1 2 3 so mid comes 24 we check whether start< or>mid if start<mid like 22<24, the lower half array is sorted and the min element is always present in unsorted
+//array so the search space reduces to half i.e. second half of sorted array.
 //✔️✔️Key Takeaways from the problem:Even, after building the solution, always run the array problem on size 1 input, in most of the cases the normal solution gives runtime error
 //class Solution {
     int binarySearch(vector<int>&nums, int start, int end)
