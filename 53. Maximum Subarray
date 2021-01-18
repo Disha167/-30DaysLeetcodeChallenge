@@ -1,0 +1,75 @@
+//🎯DAY 26 PROBLEM 1
+//The kadane's algorithm is intuitive if you have once read about it, it just has the whole idea of neglecting the subarrays that have sum<0 while moving through the subarray.
+//Another method discussed to solve this problem is divide & conquer.
+class Solution {
+public:
+    //KADANE'S ALGORITHM
+    int maxSubArray(vector<int>& nums) {
+        if(nums.size()==1)
+            return nums[0];
+        
+        int sum_till_now=0;
+        int max_sum=INT_MIN;
+        int flag=-2;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]>0)
+                flag=2;
+            sum_till_now+=nums[i];
+           if(sum_till_now<0)
+               sum_till_now=0;
+            max_sum=max(max_sum,sum_till_now);
+            
+        }
+        int max_ele=INT_MIN;
+        if(flag==-2)
+        {
+            for(int i=0;i<nums.size();i++)
+            {
+                max_ele=max(nums[i],max_ele);
+            }
+         return max_ele;
+        }
+        return max_sum;
+        
+    }
+};
+
+//Divide & Conquer Technique
+//The idea behind divide & conquer technique is to divide the array into two parts through mid and then return the maximum of the two sum & another sum found by including the mid
+//& extending the subarray starting from mid in both directions untill the sum that we will get by adding the array is greater than the previous sum 
+class Solution {
+    int including_mid(vector<int>&nums, int l, int h)
+    {
+        int m=l+(h-l)/2;
+        int leftsum=INT_MIN;
+        int sum=0;
+        for(int i=m;i>=l;i--)
+        {
+            sum+=nums[i];
+            if(sum>leftsum)
+                leftsum=sum;
+        }
+        int rightsum=INT_MIN;
+        sum=0;
+         for(int i=m+1;i<=h;i++)
+        {
+            sum+=nums[i];
+            if(sum>rightsum)
+                rightsum=sum;
+        }
+        return leftsum+rightsum;
+    }
+    int divide_find(vector<int>&nums,int l, int h)
+    {
+        if(l==h)
+            return nums[l];
+        int m=l+ (h-l)/2;
+        return max(divide_find(nums,l,m),max(divide_find(nums,m+1,h),including_mid(nums,l,h)));
+    }
+public:
+    int maxSubArray(vector<int>& nums) {
+       return divide_find(nums,0,nums.size()-1);
+        
+    }
+};
