@@ -1,0 +1,29 @@
+	//🎯DAY 27 PROBLEM 1
+  //The idea is to store dp[i-2] and dp[i-3], and give dp[i] the maximum of dp[i-2] and dp[i-3] because the adjacent robbery is not allowed.
+  class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if(nums.size()==0)
+            return 0;
+        int dp[nums.size()+1];
+        dp[0]=nums[0];
+        
+       
+        if(nums.size()==1)
+            return dp[0];
+        dp[1]=nums[1];
+        if(nums.size()==2)
+            return max(dp[0],dp[1]);
+         dp[2]=nums[2]+nums[0];
+        if(nums.size()==3)
+            return max(dp[2],dp[1]);
+        for(int i=3;i<nums.size();i++)
+        {
+            dp[i]=nums[i]+max(dp[i-2],dp[i-3]);
+        }
+        //🔴🔴While returning take care, it is not compulsorily the nums.size()-1, it can be maximum without including the last element also. Eg: 1 2 3 1
+        //Max will be 4, without including last element 1
+        return max(dp[nums.size()-1],dp[nums.size()-2]);
+    }
+};
+  
