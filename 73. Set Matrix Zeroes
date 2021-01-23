@@ -1,0 +1,75 @@
+//🎯DAY 28 PROBLEM 1
+//This may seem a trivial question but the naive approach that many a times people come up to is wrong💔 ❌❌
+//If you are thinking that you will use two nested loops, and traverse over the matrix and keep on making the rows and the coloumns zero if the cell is zero, then you are wrong
+//as it may lead to many disrepancies and we may probably use the transformed zeros to make the whole row and the coloumn zero (but we are not supposed to😢😢) as then even
+if one element is zero, the entire matrix will become zero & there is no point of asking the question XD:)
+//So, we make two arrays one of row size and one of coloumn size and keep on marking the arrays true as soon as we encounter a cell with zero value and atlast we traverse 
+//through the matrix and set the cell zero wherever either the row's value or the coloumn's value is zero.
+//This method works as the zeros of every row and col are set individually independent of each other, we decide which row and col to set and set row and col seperately.
+//Now, the challenge is to do this is O(1) space so we use the first row and first coloumn to store whether the particular row or coloumn is set and as the first row and coloumn
+//contains the flag values, so we don't check it. We maintain two variables firstrow and firstcol for checking zeros of first row, and then based on the flag values set the rest 
+//of the elements of the matrix.
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        bool firstrow=false;
+        bool firstcol=false;
+        for(int i=0;i<matrix.size();i++)
+        {
+            if(matrix[i][0]==0)
+            {
+                firstrow=true;
+                break;
+            }
+        }
+        for(int j=0;j<matrix[0].size();j++)
+        {
+            if(matrix[0][j]==0)
+            {
+                firstcol=true;
+                break;
+            }
+        }
+       for(int i=1;i<matrix.size();i++)
+       {
+           for(int j=1;j<matrix[i].size();j++)
+           {
+               if(matrix[i][j]==0)
+               {
+                   matrix[0][j]=0;
+                   matrix[i][0]=0;
+               }
+           }
+       }
+        //we start from 1 as the 0th row and coloumn contains the flag values.
+        for(int i=1;i<matrix.size();i++)
+        {
+            if(matrix[i][0]==0)
+            {
+                for(int j=0;j<matrix[0].size();j++)
+                    matrix[i][j]=0;
+            }
+        }
+        for(int j=1;j<matrix[0].size();j++)
+        {
+            if(matrix[0][j]==0)
+            {
+                for(int i=0;i<matrix.size();i++)
+                    matrix[i][j]=0;
+            }
+        }
+        if(firstrow)
+        {
+            for(int i=0;i<matrix.size();i++)
+                matrix[i][0]=0;
+        }
+        if(firstcol)
+        {
+            for(int j=0;j<matrix[0].size();j++)
+                matrix[0][j]=0;
+                
+        }
+    
+    }
+};
