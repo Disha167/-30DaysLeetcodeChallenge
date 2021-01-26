@@ -1,0 +1,49 @@
+//🎯DAY 29 PROBLEM 1
+//A very easy approach is to maintain 4 pointers : top,bottom,left,right for 4 directions i.e. while printing the matrix in spiral order we have to move in 4 directions
+//1st from left to right then from top to bottom then from right to left then from bottom to top. So we maintain 4 pointers, keep on changing the pointers when we change 
+//the directions  and henceforth print the matrix as required.
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int top=0,left=0,right=matrix[0].size()-1,bottom=matrix.size()-1;
+        int dir=0;
+        vector<int>result;
+        while(top<=bottom&&left<=right)
+        {
+            if(dir==0)
+            {
+                for(int i=left;i<=right;i++)
+                {
+                    result.push_back(matrix[top][i]);
+                }
+                top++;
+            }
+            else if(dir==1)
+            {
+                for(int i=top;i<=bottom;i++)
+                {
+                    result.push_back(matrix[i][right]);
+                }
+                right--;
+            }
+            else if(dir==2)
+            {
+                for(int i=right;i>=left;i--)
+                {
+                    result.push_back(matrix[bottom][i]);
+                }
+                bottom--;
+            }
+            else if(dir==3)
+            {
+                for(int i=bottom;i>=top;i--)
+                {
+                    result.push_back(matrix[i][left]);
+                }
+                left++;
+            }
+            dir=(dir+1)%4;
+        }
+        return result;
+    }
+};
