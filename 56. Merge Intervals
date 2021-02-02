@@ -1,0 +1,36 @@
+//🎯DAY 31 PROBLEM 1
+//First, we have to check whether the intervals are overlapping are not by checking whether the last element of the previous pair is greater than the first element of the incoming
+//pair. We use a stack to keep the process of keeping the track of last pair as well as removing the last pair and insert the new one to merge clean.
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>>ans;
+        if(intervals.size()==1)return intervals;
+        sort(intervals.begin(),intervals.end());
+      stack<vector<int>>st;
+        st.push(intervals[0]);
+        for(int i=1;i<intervals.size();i++)
+        {
+            vector<int> tp=st.top();
+            if(tp[1]>=intervals[i][0])
+            {
+                st.pop();
+                st.push({tp[0],max(tp[1],intervals[i][1])});
+            }
+            else
+            {
+                st.push({intervals[i][0],intervals[i][1]});
+            }
+        }
+        while(!st.empty())
+        {
+            vector<int> tp=st.top();
+            ans.push_back({tp[0],tp[1]});
+            st.pop();
+        }
+        //At the end, we reverse the vector as they are stored in opposite order in the stack.😇
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
