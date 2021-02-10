@@ -1,0 +1,25 @@
+//This is a easy problem , but don't solve it by iterating forward in the vector as you might think that only the last digit wil be changed but that is wrong if you are dealing 
+//with a number like 99, then we might end up changing all the digits of the vector so you never know how long can the carry +1 travel, so better reverse  the linked list
+//and then perform the addition. Don't forget ot consider the case when one digit in the vector increases when lst digit is>10 like 99+1 gives 100 so vector size increases by 1.
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+       reverse(digits.begin(),digits.end());
+       vector<int>ans;
+        int carry=1;
+        int sum;
+        for(auto it=digits.begin();it!=digits.end();it++)
+        {
+             sum=*it+carry;
+            if(sum<10)
+                carry=0;
+            else
+                carry=1;
+            ans.push_back(sum%10);
+        }
+        if(sum>=10)
+            ans.push_back(1);
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
