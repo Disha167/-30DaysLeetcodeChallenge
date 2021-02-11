@@ -1,5 +1,5 @@
 //🎯DAY 25 PROBLEM 1
-//EDGE CASES TO BE CONSIDERED: the range of int is -2^(31) to 2^(31) so abs(-2 ^(31)) goes out of range of int so we use long long
+//EDGE CASES TO BE CONSIDERED: the range of int is -2^(31) to 2^(31)-1 so abs(-2 ^(31)) goes out of range of int so we use long long
 //The idea is to use log(n) time complexity for rate of decrease of n as that is what constraints allow. 
 //If we have to calculate 2^(10), 2^(10)=> (2*2)^5 => 4^(5)=>4 * 4^(4)=> 4* (4*4)^2=> 4* (16)^2 => 4* (16*16)^1, we reached base case and we keep on returning 256 upwards
 //and once multiply it by 4.
