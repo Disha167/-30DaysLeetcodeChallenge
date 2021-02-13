@@ -1,0 +1,39 @@
+//🎯DAY 34 PROBLEM 1
+//The problem states to sort an array containing 0s,1s and 2s without using any sorting algorithm in one pass, one way is to count the number of 0s,1s and 2s and then in another
+//pass, replace the array elements with the same count. But, if you are up for a more interesting solution : THEN READ BELOW 😎😎
+//Also, known as the dutch national flag problem, it follows an approach of dividing the array into three regions low,middle and high.Low for all zeros, middle for all ones and
+//high for all twos. We maintain three pointers for that low,middle,high such that all the numbers to left of low are zero and all the numbers to right of high are twos and ones
+//automatically comes in between. 
+
+class Solution {
+
+public:
+        void myswap(int *a,int *b)
+    {
+        int temp=*a;
+        *a=*b;
+        *b=temp;
+    }
+    void sortColors(vector<int>& nums) {
+        int middle=0,low=0,high=nums.size()-1;
+     while(middle<=high)
+     {
+         if(nums[middle]==0)//if we find any of zeros, then we swap it with the element on low position and increase both low(as now this position has 0) and middle
+         //We so not have to check the new element at middle's place after swapping as on coming till 0, on the left of zero we would have only 1s , all the 2s & 0s are
+         //already swapped. So, no need to check for 0s and 1s as 1s would by default remain in middle .
+         {
+             myswap(&nums[middle],&nums[low]);
+             middle++;
+             low++;
+         }
+         else if(nums[middle]==1)
+             middle++;
+         else 
+         { //if we find any twos, then we swap it with the element on high position and only decrease high as the  right side of highs contain 2s .
+         //We do not increase middle as we also check the new number that we obtain at middle's place after swapping .
+             myswap(&nums[middle],&nums[high]);
+             high--;
+         }
+     }
+    }
+};
