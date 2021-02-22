@@ -1,0 +1,21 @@
+ //🎯DAY 35 PROBLEM 1
+ //This problem can be done in many ways, but keep in mind that in bst property, every node should be greater than all the nodes in it's left subtree and smaller than all the nodes
+ //in it's right subtree.
+ //One way is brute force to keep a track of max_of_left_subtree and min_of_right_subtree and compare it with every node.It will take O(n^2).
+ //An efficient way is to check whether every node belong in a specific range, specific range for root will be -infinity to infinity and we update maximum as we go left and minimum
+ //as we go right
+ bool helper(TreeNode* root, long min, long max)
+    {
+        if(root==NULL)
+            return true;
+        if((root->val>min)&&(root->val<max)&&(helper(root->left,min,root->val))&&(helper(root->right,root->val,max)))
+            return true;
+        else 
+            return false;
+    }
+    bool isValidBST(TreeNode* root) {
+        if((root->left==NULL)&&(root->right==NULL)) return true;
+        long max= LONG_MAX;
+        long min=LONG_MIN;
+       return helper(root,min,max);
+    }
