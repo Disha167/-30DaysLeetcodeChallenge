@@ -1,0 +1,73 @@
+//🎯DAY 43 PROBLEM 1
+//🥵Finally done this question, the concept was easy that for every index, we have to consider the rectangle with height=the current value of array, so we can take the 
+//difference of nearest smaller to left & nearest smaller to right as the width.
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        if(heights.size()==1)
+            return heights[0];
+        vector<pair<int,int>>right_smaller;
+        //⚠️ Also, remember that the nearest smallest to right for 1 in 6,2,5,4,5,1,6 is 7th index(0 based indexing) as the rectangle with height 1 when calculated will expand
+        //throughout the arrray. Similarly, the nearest smallest to left will be -1 and hence the rectangle area would be [(7 - (-1))-1]*1=7
+        right_smaller.push_back({heights[heights.size()-1],heights.size()});
+        stack<pair<int,int>>st;
+        st.push({heights[heights.size()-1],heights.size()-1});
+        for(int i=heights.size()-2;i>=0;i--)
+        {
+            if(!st.empty()&&(st.top().first<heights[i]))
+            {
+                right_smaller.push_back(st.top());
+            }
+            //⚠️ Never forget to put >= here instead of > as in the latter case, while loop will become infinite i.e. never ending.
+            else if(!st.empty()&&(st.top().first>=heights[i]))
+            {
+                while(!st.empty()&&(st.top().first>=heights[i]))
+                {
+                    st.pop();
+                }
+                if(!st.empty())
+                    right_smaller.push_back(st.top());
+                else
+                    right_smaller.push_back({heights.size(),heights.size()});
+            }
+            st.push({heights[i],i});
+        }
+        reverse(right_smaller.begin(),right_smaller.end());
+      
+        vector<pair<int,int>>left_smaller;
+        left_smaller.push_back({heights[0],-1});
+        stack<pair<int,int>>st1;
+        st1.push({heights[0],0});
+        for(int i=1;i<heights.size();i++)
+        {
+            if(!st1.empty()&&(st1.top().first<heights[i]))
+            {
+                left_smaller.push_back(st1.top());
+            }
+            else if(!st1.empty()&&(st1.top().first>=heights[i]))
+            {
+                while(!st1.empty()&&(st1.top().first>=heights[i]))
+                {
+                    st1.pop();
+                }
+                if(!st1.empty())
+                    left_smaller.push_back(st1.top());
+                else
+                    left_smaller.push_back({-1,-1});
+            }
+            st1.push({heights[i],i});
+        }
+     
+        int max_area=0;
+        for(int i=0;i<heights.size();i++)
+        {
+            int curr_area=0;
+            int diff=right_smaller[i].second-left_smaller[i].second;
+           
+                curr_area=heights[i]*(diff-1);
+            max_area=max(max_area,max(curr_area,heights[i]));   
+        }
+        
+        return max_area;
+    }
+};
