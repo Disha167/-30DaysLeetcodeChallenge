@@ -6,10 +6,7 @@
 //                                                                \
 //                                                                  1
 //
-//Then reverse it:  i.e reverse of [[9,6,3],[8,5,2],[7,4,1]] is    [[7,4,1],[8,5,2],[9,6,3]]
-//in matrix form, 7 4 1
-//                8 5 2
-//                9 6 3    is the anticlockwise image of given I/P
+
 
 class Solution {
 public:
@@ -18,16 +15,20 @@ public:
       int i=0;
             for(int j=n-2;j>=0;j--)
             {
-                int a=i;
+                int a=i;//we use a and b extra variables so as to make sure j dosen't changes as j is used for looping the first row and rest of the elements on right half of 
+                        //diagonal is taken care by a++, b++
                 int b=j;
-                while(a+b<=(n-2))//SO THAT WE SWAP ONLY HALF WAY ALONG THE DIAGONAL
+                while(a+b<=(n-2))//SO THAT WE SWAP ONLY HALF WAY ALONG THE DIAGONAL i.e. we swap only 1,2,4 in the above matrix 1 2 3
+                //                                                                                                              4 5 6
+                //                                                                                                              7 8 9
                 {
-                   swap( matrix[a][b],matrix[(n-1)-b][(n-1)-a]);
+                   swap( matrix[a][b],matrix[(n-1)-b][(n-1)-a]);// to swap 2 i.e. cell at 0th row 1st col with  cell at (2-1) 1st row and (2-0) 0th col i.e. 6 
                     a++;
                     b++;
                 }
             }
         int j=0;
+        //starting from i=1 as 0 row 0 col element is already covered in above j for loop
         for( i=1;i<n-1;i++)
         {
             int a=i;
@@ -40,6 +41,18 @@ public:
                 }
             
         }
+//After the above process(transposing along the top right to bottom left axis), the given I/p matrix 
+//1 2 3
+//4 5 6
+//7 8 9
+//will be converted to:
+//9 6 3
+//8 5 2
+//7 4 1
+//Then reverse it:  i.e reverse of [[9,6,3],[8,5,2],[7,4,1]] is    [[7,4,1],[8,5,2],[9,6,3]]
+//in matrix form, 7 4 1
+//                8 5 2
+//                9 6 3    is the anticlockwise image of given I/P
         reverse(matrix.begin(),matrix.end());
         
     }
