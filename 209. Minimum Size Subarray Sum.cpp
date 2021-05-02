@@ -3,7 +3,8 @@
 //if we know the exact sum then only hashing can be used
 //this solution is based on sliding window technique i.e. we keep on adding the elements untill the sum is less than k , but once the sum becomes k, then we keep on subtracting 
 //element i..e minimizing window size and hence keeping track of the length of the array.
-//But, this method can't be used when the target sum is negative.
+//But, this method can't be used when the target sum is negative as this algorithm works because when we keep on adding elements, the sum increases but that is not true when we
+//add negative elements(only works for positive elements)
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) {
