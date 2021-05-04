@@ -19,8 +19,10 @@ class Solution {
         for(int j=i;j<nums.size();j++)
         {
             swap(nums[i],nums[j]);
-              genPermute(nums,i+1,ans);//At every level, we fix the next character
-            swap(nums[i],nums[j]);
+              genPermute(nums,i+1,ans);//At every level, we fix the next character. Here, we are passing i+1 as we are fixing ith character then calculating permutations
+              //for i+1 to end of string. Eg: we fix A in first iteration(if string is ABC), and then we get 2 permutations ABC, ACB.
+            swap(nums[i],nums[j]);//this statement is written to backtrack like if we swapped B with C in the 21st line to give ACB , then we have to swap again B and C
+            //to get ABC back in order to perform the further permutation
         }
     }
 public:
