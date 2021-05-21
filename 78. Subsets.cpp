@@ -10,12 +10,13 @@ public:
         //ans.insert({nums[index]});
        // vector<int>temp=curr;
        // temp.push_back(nums[index]);
-        for(int i=index;i<nums.size();i++)//then exploring the other options when we backtrack like adding 3 to 1 when we backtrack and remove 2.
+        for(int i=index;i<nums.size();i++)//This for loop is for the time when helper returns it's control, we pop the ith character & then add the remaining characters by for loop
+            //eg: removing the current charcter 2 then exploring the other options like adding 3 to previously present 1 in curr thus getting {1,3} if my nums is {1,2,3} .
         {
             curr.push_back(nums[i]);
             ans.push_back(curr);
-            helper(nums,i+1,ans,curr);
-            curr.pop_back();//we backtrack
+            helper(nums,i+1,ans,curr); //this recursive call fixes the ith character & call for remaining characters of string
+            curr.pop_back();//we backtrack i.e. explore the option when we had not taken ith character in our string
         }
     }
     vector<vector<int>> subsets(vector<int>& nums) {
