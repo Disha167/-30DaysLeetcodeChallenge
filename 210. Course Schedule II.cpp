@@ -52,6 +52,9 @@ public:
               
             }
         }
+        //In dfs, we can check that whether a node is already visited or not but in bfs, this is a hack that we apply i.e. if we get a topological sort
+        //it is linear and it will be equal to the total number of vertices, so we can check whether the no. of nodes present in topo sort is equal to
+        //total no of courses.
         if(ans.size()==numCourses)//we check here for whether a cycle is there or not, if a cycle would be there then maybe the indegree of any vertice
           //will not be 0 or the while loop would end sooner so we go to the next else part and return an empty vector.
             return ans;
