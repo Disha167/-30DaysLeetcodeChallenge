@@ -1,4 +1,6 @@
 //🎯DAY 31 PROBLEM 1
+//The approach is very easy.
+//The approach is to first sort the array & then if the current top of stack's last>current element's first, we keep on merging.
 //First, we have to check whether the intervals are overlapping are not by checking whether the last element of the previous pair is greater than the first element of the incoming
 //pair. We use a stack to keep the process of keeping the track of last pair as well as removing the last pair and insert the new one to merge clean.
 
