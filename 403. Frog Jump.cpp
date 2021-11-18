@@ -11,14 +11,15 @@ public:
         unordered_set<int>seen;
         for(int i=0;i<stones.size();i++)
         {
-            seen.insert(stones[i]);
+            seen.insert(stones[i]); /*we can only jump on stones*/
         }
+        /*We keep track of all the possible positions in queue, and we avoid tle by keeping track in visited and storing only those that are stones in seen*/
         while(!q.empty())
         {
             pair<int,int>tp=q.front();
             int curr_pos=tp.first;
             int curr_size=tp.second;
-            if(curr_pos==n)
+            if(curr_pos==n) /*if we have reached the last stone, then we return true*/
                 return true;
             q.pop();
             if(curr_pos+curr_size!=curr_pos&&(seen.find(curr_pos+curr_size)!=seen.end())&&(visited.find({curr_pos+curr_size,curr_size})==visited.end()))
