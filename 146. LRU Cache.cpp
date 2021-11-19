@@ -76,8 +76,10 @@ public:
         }
         if(mp.size()==_cap)
         {
-            mp.erase(tail->prev->key); //if cache has already reached it's capacity then we have to remove the least recently used i.e. before tail & then insert 
-          //the current key,value pair
+             //if cache has already reached it's capacity then we have to remove the least recently used i.e. before tail & then insert the current key,value pair
+            /*Notice , that here we are using tail->prev instead of tail as we are keeping tail and head just as placeholder, it avoids the need to update tail
+            again while performing any operation also now evicting from cache do not directly evicts tail rather tail prev, so we do not loose our tail also*/
+            mp.erase(tail->prev->key);
             delete_node(tail->prev);
             
             
