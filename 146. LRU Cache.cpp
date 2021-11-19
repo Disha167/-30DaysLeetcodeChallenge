@@ -20,7 +20,8 @@ public:
     };
     map<int,ListNode*>mp;
     int _cap;
-      ListNode* head=new ListNode(-1,-1);
+      ListNode* head=new ListNode(-1,-1); /*We are creating head and tail seperately so that we dont have to deal with updating head
+    and tail we can just return head->next and tail->prev and our head & tail remains -1 and -2 always */
       ListNode* tail=new ListNode(-2,-2);
     LRUCache(int capacity) {
       
@@ -52,6 +53,8 @@ public:
            
             ListNode* res_node=mp[key]; //we return the value if it is there in the map, but we also have to make it the most recently visited node so we have to 
           //delete it's current occurence & add it after head.
+             /*the node that we are updating can be tail, so our tail gets updated, so we modularise the code of deleting and adding to avoid mistakes and
+             maintain the head and tail as -1 and -2 seperately so that they are not updated in any of the operations*/
             delete_node(res_node);
             mp.erase(key);
             int val=res_node->val;
@@ -67,7 +70,8 @@ public:
         if(mp.find(key)!=mp.end())
         {
            
-            delete_node(mp[key]); //if it is already there in the map, we delete the current occurence & insert it as most recently visited after head
+            delete_node(mp[key]); //As the address changes, when we insert it again after head.
+            //If it is already there in the map, we delete the current occurence & insert it as most recently visited after head
              mp.erase(key);
         }
         if(mp.size()==_cap)
