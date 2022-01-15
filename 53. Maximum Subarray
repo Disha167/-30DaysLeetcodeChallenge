@@ -15,8 +15,9 @@ public:
         {
             if(nums[i]>0)
                 flag=2;
-            sum_till_now+=nums[i];
-           if(sum_till_now<0)
+            sum_till_now+=nums[i]; //if the prefixsum is greater than 0, but lesser than the previous prefix sum like 7 -4 1 , prefix sum= 7 3 4 , 3 is less than 7
+            still we add it in our prefix sum as X(where X is the sum of elements in the right), X+3 will always be greater than X. 
+           if(sum_till_now<0)//But when the prefix sum is less than 0, then it will only decrease the future sum , not increase it . X-3<X so we not include it.
                sum_till_now=0;
             max_sum=max(max_sum,sum_till_now);
             
