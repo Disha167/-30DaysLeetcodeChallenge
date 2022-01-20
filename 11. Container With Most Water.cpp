@@ -15,6 +15,12 @@ public:
         while(start<end)
         {
             max_area=max(max_area,min(height[start],height[end])*(end-start));
+            /*
+            PROOF OF CONCEPT AS WHY WE NEGLECT THE HEIGHT THAT IS SMALLER AND MOVE INWANRDS,(and not move inwards on the side where height is larger like end here)
+            if(height[start]<height[end]), then we cannot move end-- as on doing end-- we will always get lesser area as:
+            1) if(height[end-1]>height[end]), then area=height[start]*width (lesser area as height[start] is already lesser than height[end])
+            2)if(height[end-1]<height[end]), then area=height[end-1]*width (lesser area as height[end-1]<height[end])
+            */
             if(height[start]<height[end])
             {
                 start++;
