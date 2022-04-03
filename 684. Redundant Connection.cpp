@@ -8,6 +8,9 @@ First, we create a graph(adjacency list) out of edges vector given, then we run 
 already visited node ,we mark it as the start of the cycle and then returning back we push all the nodes untill we come across that start of cycle again,
 that means our loop is completed we again mark it as -1 and do not push nodes further.
 
+THE TIME COMPLEXITY HERE WILL BE O(N) as we are traversing every node once in worst case as we are using visited map
+SPACE COMPLEXITY IS AGAIN O(N) for storing the graph in adj and for viisted & all in worst case
+
 */
 class Solution {
 public:
@@ -46,7 +49,7 @@ public:
     }
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
         vector<int>adj[edges.size()+1];
-        for(int i=0;i<edges.size();i++)
+        for(int i=0;i<edges.size();i++)/*Note that adjacency list is not given , only list of edges is given*/
         {
            
             adj[edges[i][0]].push_back(edges[i][1]);
@@ -58,7 +61,7 @@ public:
         int start_of_cycle=-1;
         dfs_cycle(1,adj,parent,visited,edge_cycle,start_of_cycle);
         vector<int>ans;
-        for(int i=edges.size()-1;i>=0;i--)
+        for(int i=edges.size()-1;i>=0;i--)/*we find the first edge whose both nodes are present in cycle & return that*/
         {
            if(edge_cycle.find(edges[i][0])!=edge_cycle.end()&& edge_cycle.find(edges[i][1])!=edge_cycle.end())
                return edges[i];
