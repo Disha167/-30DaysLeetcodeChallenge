@@ -1,7 +1,7 @@
 //🎯DAY 76 PROBLEM 2
 /*A unique binary tree can be constructed if postorder(LRO) and inorder(LOR) traversals of the tree are given. The logic is that in the postorder traversal for 
-every subtrees, root always comes at the end, so we can find the root for every tree from postorder traversal. Now, to find the left and right of root, we can search
-that element in inorder traversal and the left of that element will be left subtree and right will be right subtree*/
+every subtrees, root always comes at the end, so we can find the root for every tree from postorder traversal. Now, to find the left and right of root, 
+we can search that element in inorder traversal and the left of that element will be left subtree and right will be right subtree*/
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -21,6 +21,14 @@ POSTORDER: 40 50 20 60 30 10
    20    30
   /  \   /
 40   50  60
+
+Now , that we know the approach i.e. finding the last of all elements in postorder, it will be root and then finding the root in inorder. So, left of root
+in inorder will be left subtree and right of root in inorder will be right subtree. And, we have to do recursion for every subtree so the problem is how
+will the indexes of inorder and postorder will decrease. The inorder_start and inorder_end for left subtree will be inorder_start and root_index-1, for
+right subtree it will be root_index+1 and inorder_end. For postorder, the indexes of the postorder_start and postorder_end will depend on the inorder,
+it can be calculated on the basis of number of elements to the left of root. 20 40 50 are a part of left subtree i.e. present in first three index of 
+postorder traversal so poststart=poststart and postend=poststart+nums_left-1 for left subtree and similarly 60 30 are a part of right subtree.
+So, for right subtree, poststart=postart+nums_left and postend=postend-1.
 */
 class Solution {
 public:
@@ -38,7 +46,7 @@ public:
      /*the right subtree will be 60,30 in inorder and 60,30 in postorder, inorder will be from 4 to 5 i.e. inroot+1 to inend and 
      postorder will be from 3 to 4 i.e. postStart+numsleft (0+3=3) to postend-1 (4)*/
     root->right=helper(postorder,inorder,mp,inRoot+1,inEnd,postStart+numsLeft,postEnd-1);
-    return root;
+    return root;//now that the left and the right children of that tree is attached, we return root to it's parent
       /*Similarly, the recursion calls will be carried out for the left subtrees and right subtrees*/
 }
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
