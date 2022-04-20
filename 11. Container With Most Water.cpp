@@ -3,6 +3,9 @@
 //We use this technique when we have to compare each element with every element in the given collection.
 //We use two pointer technique when we have to maintain two different parts of array at same time like here, we maintain the start bound as well as end bound of container
 //We start from the two end points of the array, and decrease the pointer having lesser height untill both pointer becomes the same.
+/*HUM JISKI KAM HEIGHT HOTI HAI UDHAR TARAF REDUCE KRTE HAIN KYUNKI US SE BADI AREA POSSIBLE NI US VALUE ME.. AGAR L BADA HAI TOH BHI HUM MIN LENGE TOH
+BADI AREA NI AEGI AUR AGAR L CHHOTA HAI TOH BREADTH KAM HO JAEGI TOH LESSER AREA AEGI
+*/
 class Solution {
 public:
     int maxArea(vector<int>& height) {
