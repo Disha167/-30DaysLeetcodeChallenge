@@ -1,6 +1,9 @@
 //🎯DAY 33 PROBLEM 2
-//Easy problem, soved using fibonacci concept (recursion with memoization)
-
+//Easy problem, solved using fibonacci concept (recursion with memoization)
+//The intuition behind this problem is that dp[n] i.e. 5 (steps to reach 5) can be calculated by adding the total steps to reach 4 and total steps to 
+reach 3 as we can take only 1 or 2 steps . Similarly, to understand more for calculating ways to reach 3 , you can add ways to reach 1 and ways to reach 2
+i.e. 1 and 2 ,that will give ways to reach 3. from 1 you take 2 and you reach 3, from 2 you take 1, and reaching 2 also has 2 ways so you can take 1 , 1
+and 1 to reach 3 making 3. So , logically for reaching 3, you have partition 2+1=3 , and dp[2] and dp[1] will give all ways to reach 2 and 1 ,& hence 3.
 class Solution {
 public:
       int dp[46];
