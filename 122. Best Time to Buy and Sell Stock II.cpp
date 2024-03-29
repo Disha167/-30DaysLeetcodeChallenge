@@ -21,6 +21,17 @@ The peak valley concept goes like this:
   
 */
 
+/*yaha pr key ye hai ki hum atmost 1 hi share hold krskte hai toh humko 
+    jitna difference milta jaye utna grab krna hai
+    
+    Eg: 
+    1st case: we have 4>2 but 4<7
+    2 4 7 isme 7-2=5 hai toh 4-2 + 7-4 = 5 hai
+    2nd case: isme 1<2 1<3
+    2 1 3 isme 3-1=2 hai
+    3rd case: isme 5>2 but 5<3
+    2 5 3 isme 5-2=3 hai ans 
+    toh all possible cases me, whatever profit we are getting , we will add it up*/
 
 class Solution {
 public:
