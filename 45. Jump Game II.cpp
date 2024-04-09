@@ -1,4 +1,50 @@
 //🎯DAY 30 PROBLEM 1
+//The simple approach is bfs approach, where we are creating levels, keeping track of max reachable at each level
+/*Eg: 2 3 1 1 4, windows will be created and the key is to find the maximum reachable index from that window.
+First window = 2, max reachable index = max(0+2,-1)=2 so 
+Second window = 3 1 max reachable index = max(3+1,-1)=4 so l=1 r=2
+Third window = 1 4 max reachable index = max(4+4, -1)=8 so r>n
+The logic is from first window, we need one jump to reach second window, then one jump to reach 3rd window from 2nd window.*/
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+         int l=0,r=0,min_jumps=0;
+         int n=nums.size();
+        while(l<nums.size())
+        {    
+            min_jumps++;
+            int max_index=-1;
+            for(int i=l;i<=r;i++)
+            {
+                max_index=max(max_index,i+nums[i]);
+
+            }
+            l=r+1;
+
+            r=(max_index<n-1)?max_index:(n-1); /*corner case where max_index can be greater than n-1*/
+        }
+        return min_jumps-1;
+
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+//APPROACH 2
+
+
+
+
+
 //Here, there is an assumption that always it will reach the last index so no need to check whether it will reach the last index or not.
 /*THE CONCEPT BEHIND THIS PROBLEM IS THAT FOR EVERY INDEX WE CALCULATE MAX_REACHABLE INDEX WHILE TRAVERSING FROM THE CURRENT MAX_INDEX IT CAN REACH,(WE JUST KEEP
 ON DECREASING THE STEPS)
