@@ -1,0 +1,24 @@
+name: GitHub Docker Actions
+
+on:
+  push:
+    branches: [ main ]
+    paths: [hello-world-docker-action/** ]
+  workflow_dispatch:
+
+jobs:
+  test-actions:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout 
+        uses: actions/checkout@v3.3.0
+
+      - name: Run my own container action
+        id: hello-action
+        uses: ./.github/actions/hello-world-action
+        with:
+          who-to-greet: '@disha'
+          
+      - name: Output time set in container
+        run: echo "time was ${{steps.hello-action.outputs.time }} when action said hello"
