@@ -21,3 +21,4 @@ jobs:
           who-to-greet: '@disha'
           
       - name: Output time set in container
+        run: echo "time was ${{steps.hello-action.outputs.time }} when action said hello"
