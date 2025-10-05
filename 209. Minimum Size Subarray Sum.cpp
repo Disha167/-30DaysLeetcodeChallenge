@@ -27,3 +27,44 @@ public:
             return len;
     }
 };
+
+
+//it is a good problem to think of now once you get the approach that you have to keep on incrementing left pointer if the window is not valid, and if it is valid decrement the right
+//pointer to optimise it
+//But, you have to keep in mind that you have to do both of the things simultaneously i.e. you keep on incrementing and then decrement as soon as you find the solution in the same
+//iteration otherwise your end value is messed if it is incremented it becomes end+1 and then you found the solution at end, so while find the solution only you have to optimise it
+//so the logic is that keep on expanding the window right++/end++ and then for every valid expansion try to optimise it. It is NESTED WHILE LOOP
+//SEGREGATION OF TWO LOGICS WILL NOT WORK AS ONE OF THE LOGIC OF EXPANDING THE WINDOW IS DEPENDENT ON ANOTHER
+//ONCE YOU EXPAND THE WINDOW TO 5, AND YOU GET SUM AS TARGET THEN YOU HAVE TO OPTIMISE IT IN SAME ITERATION IT DOSEN'T HAVE TO GET OPTIMISED IN 6TH ITERATION OTHERWISE THE LOGIC BECOMES 
+//FLAWED HERE IF,ELSE CANT BE USED BECAUSE BOTH HAS TO BE DONE AT THE SAME TIME .IN SAME ITERATION YOU HAVE TO INCREASE AND YOU HAVE TO OPTIMISE FOR EVERY ELEMENT AS END OF WINDOW
+//WRONG SOLUTION
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int start=0;
+        int end=1;
+        int min_ans=nums.size()+1,sum=nums[0];
+        while(end<nums.size())
+        {
+            if(end<nums.size()&&sum<target)
+            {
+                while(end<nums.size()&&sum<target)
+                {      
+                    sum+=nums[end];
+                    end++; 
+                }  
+            }
+            else if(sum>=target)
+            {  
+                while(start<nums.size()&&start<end&&sum>=target)
+                {            
+                    min_ans=min(min_ans,end-start+1);
+                    sum-=nums[start];
+                    start++;  
+                }   
+            } 
+            //agar ye uppar wale me ni jaraha that means ki sum target hochuka aur optimise hochuka hai toh fr break krdo
+        }
+        return min_ans;      
+    }
+};
